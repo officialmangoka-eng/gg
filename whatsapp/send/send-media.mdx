@@ -1,0 +1,466 @@
+---
+title: "Send Media"
+description: "Send images, videos, audio files, and documents to WhatsApp contacts or groups through a linked session."
+---
+
+## Endpoint
+
+<Badge color="blue">POST</Badge> `https://api.wapimax.com/whatsapp/v1/sessions/{session_id}/messages/image`
+
+<Badge color="blue">POST</Badge> `https://api.wapimax.com/whatsapp/v1/sessions/{session_id}/messages/video`
+
+<Badge color="blue">POST</Badge> `https://api.wapimax.com/whatsapp/v1/sessions/{session_id}/messages/audio`
+
+<Badge color="blue">POST</Badge> `https://api.wapimax.com/whatsapp/v1/sessions/{session_id}/messages/document`
+
+## Authentication
+
+Every request must include your API key in the `X-API-Key` header. See [Authorization](/get-started/authorization) to create one.
+
+| Header | Value | Required |
+| --- | --- | --- |
+| `X-API-Key` | Your WapiMax API key | Yes |
+| `Content-Type` | `application/json` | Yes |
+| `Accept` | `application/json` | Recommended |
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `session_id` | string | Yes | ID of the session used to send the media |
+
+## Request body
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `to` | string | Yes | Contact phone number or group ID. See [Recipients](#recipients) |
+| `image` / `video` / `audio` / `document` | object | Yes | Media object. Use the key that matches the endpoint |
+| `caption` | string | No | Caption text. Image, video, and document only |
+| `filename` | string | No | File name shown to the recipient. Document only |
+| `ptt` | boolean | No | Set to `true` to send audio as a voice note. Audio only |
+
+### Recipients
+
+| Recipient | `to` format | Example |
+| --- | --- | --- |
+| Contact | Phone number | `254712345678` |
+| Group | Group ID | `120363012345678901@g.us` |
+
+### Media object
+
+Provide either a public URL or Base64 data.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `url` | string | Public URL of the file |
+| `data` | string | Base64-encoded file. Use instead of `url` |
+| `mimetype` | string | MIME type of the file. Required with `data` |
+
+<CodeGroup>
+
+```json Image
+{
+  "to": "254712345678",
+  "image": {
+    "url": "https://example.com/image.jpg"
+  },
+  "caption": "Product preview"
+}
+```
+
+```json Video
+{
+  "to": "254712345678",
+  "video": {
+    "url": "https://example.com/video.mp4"
+  },
+  "caption": "Watch this video"
+}
+```
+
+```json Audio
+{
+  "to": "254712345678",
+  "audio": {
+    "url": "https://example.com/audio.mp3"
+  },
+  "ptt": false
+}
+```
+
+```json Document
+{
+  "to": "254712345678",
+  "document": {
+    "url": "https://example.com/report.pdf"
+  },
+  "filename": "report.pdf",
+  "caption": "Monthly report"
+}
+```
+
+```json Group
+{
+  "to": "120363012345678901@g.us",
+  "image": {
+    "url": "https://example.com/image.jpg"
+  },
+  "caption": "Product preview for the team"
+}
+```
+
+```json Base64
+{
+  "to": "254712345678",
+  "image": {
+    "data": "BASE64_ENCODED_FILE",
+    "mimetype": "image/jpeg"
+  }
+}
+```
+
+</CodeGroup>
+
+## Request
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "254712345678",
+    "image": {
+      "url": "https://example.com/image.jpg"
+    },
+    "caption": "Product preview"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch(
+  "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image",
+  {
+    method: "POST",
+    headers: {
+      "X-API-Key": "YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      to: "254712345678",
+      image: {
+        url: "https://example.com/image.jpg"
+      },
+      caption: "Product preview"
+    })
+  }
+);
+
+const result = await response.json();
+console.log(result);
+```
+
+```javascript Node.js
+const axios = require("axios");
+
+const { data } = await axios.post(
+  "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image",
+  {
+    to: "254712345678",
+    image: {
+      url: "https://example.com/image.jpg"
+    },
+    caption: "Product preview"
+  },
+  {
+    headers: {
+      "X-API-Key": "YOUR_API_KEY"
+    }
+  }
+);
+
+console.log(data);
+```
+
+```php PHP
+<?php
+$ch = curl_init(
+    "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image"
+);
+
+curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => [
+        "X-API-Key: YOUR_API_KEY",
+        "Content-Type: application/json"
+    ],
+    CURLOPT_POSTFIELDS => json_encode([
+        "to" => "254712345678",
+        "image" => [
+            "url" => "https://example.com/image.jpg"
+        ],
+        "caption" => "Product preview"
+    ])
+]);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo $response;
+```
+
+```python Python
+import requests
+
+url = "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image"
+
+response = requests.post(
+    url,
+    headers={"X-API-Key": "YOUR_API_KEY"},
+    json={
+        "to": "254712345678",
+        "image": {
+            "url": "https://example.com/image.jpg"
+        },
+        "caption": "Product preview"
+    }
+)
+
+print(response.json())
+```
+
+```java Java
+import okhttp3.*;
+
+OkHttpClient client = new OkHttpClient();
+
+String json = """
+{
+  "to": "254712345678",
+  "image": {
+    "url": "https://example.com/image.jpg"
+  },
+  "caption": "Product preview"
+}
+""";
+
+Request request = new Request.Builder()
+    .url("https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image")
+    .addHeader("X-API-Key", "YOUR_API_KEY")
+    .post(RequestBody.create(
+        json,
+        MediaType.parse("application/json")
+    ))
+    .build();
+
+try (Response response = client.newCall(request).execute()) {
+    System.out.println(response.body().string());
+}
+```
+
+```go Go
+package main
+
+import (
+    "bytes"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+func main() {
+    body := []byte(`{
+        "to": "254712345678",
+        "image": {
+            "url": "https://example.com/image.jpg"
+        },
+        "caption": "Product preview"
+    }`)
+
+    req, _ := http.NewRequest(
+        "POST",
+        "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image",
+        bytes.NewBuffer(body),
+    )
+
+    req.Header.Set("X-API-Key", "YOUR_API_KEY")
+    req.Header.Set("Content-Type", "application/json")
+
+    res, err := http.DefaultClient.Do(req)
+    if err != nil {
+        panic(err)
+    }
+    defer res.Body.Close()
+
+    result, _ := io.ReadAll(res.Body)
+    fmt.Println(string(result))
+}
+```
+
+```ruby Ruby
+require "net/http"
+require "json"
+
+uri = URI(
+  "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image"
+)
+
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+
+request = Net::HTTP::Post.new(uri)
+request["X-API-Key"] = "YOUR_API_KEY"
+request["Content-Type"] = "application/json"
+
+request.body = {
+  to: "254712345678",
+  image: {
+    url: "https://example.com/image.jpg"
+  },
+  caption: "Product preview"
+}.to_json
+
+response = http.request(request)
+puts response.body
+```
+
+```csharp C#
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+
+using var client = new HttpClient();
+
+client.DefaultRequestHeaders.Add(
+    "X-API-Key",
+    "YOUR_API_KEY"
+);
+
+var payload = new
+{
+    to = "254712345678",
+    image = new
+    {
+        url = "https://example.com/image.jpg"
+    },
+    caption = "Product preview"
+};
+
+var content = new StringContent(
+    JsonSerializer.Serialize(payload),
+    Encoding.UTF8,
+    "application/json"
+);
+
+var response = await client.PostAsync(
+    "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image",
+    content
+);
+
+Console.WriteLine(await response.Content.ReadAsStringAsync());
+```
+
+```swift Swift
+import Foundation
+
+let url = URL(
+    string: "https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image"
+)!
+
+var request = URLRequest(url: url)
+request.httpMethod = "POST"
+request.setValue("YOUR_API_KEY", forHTTPHeaderField: "X-API-Key")
+request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+request.httpBody = try JSONSerialization.data(withJSONObject: [
+    "to": "254712345678",
+    "image": [
+        "url": "https://example.com/image.jpg"
+    ],
+    "caption": "Product preview"
+])
+
+let (data, _) = try await URLSession.shared.data(for: request)
+print(String(data: data, encoding: .utf8)!)
+```
+
+```kotlin Kotlin
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+
+val client = OkHttpClient()
+
+val json = """
+{
+  "to": "254712345678",
+  "image": {
+    "url": "https://example.com/image.jpg"
+  },
+  "caption": "Product preview"
+}
+""".trimIndent()
+
+val request = Request.Builder()
+    .url("https://api.wapimax.com/whatsapp/v1/sessions/SESSION_ID/messages/image")
+    .addHeader("X-API-Key", "YOUR_API_KEY")
+    .post(json.toRequestBody("application/json".toMediaType()))
+    .build()
+
+client.newCall(request).execute().use {
+    println(it.body?.string())
+}
+```
+
+</CodeGroup>
+
+## Response
+
+<CodeGroup>
+
+```json 200 OK
+{
+  "status": "sent",
+  "message_id": "3EB0C8F1A2B3C4D5E6",
+  "timestamp": 1794304083,
+  "to": "254712345678"
+}
+```
+
+</CodeGroup>
+
+### Response fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `status` | string | Sending status |
+| `message_id` | string | Unique ID of the sent message |
+| `timestamp` | integer | Sent time (Unix) |
+| `to` | string | Recipient phone number or group ID |
+
+## Errors
+
+| Status | Description |
+| --- | --- |
+| `400` | Invalid request or missing required parameters |
+| `401` | Missing or invalid API key |
+| `403` | Access to this session is not permitted |
+| `404` | Session not found |
+| `413` | Media file exceeds the maximum file size allowed by your plan |
+| `422` | Media file is unavailable or its metadata cannot be retrieved |
+| `429` | Plan usage quota exceeded or rate limit exceeded. |
+| `503` | Session is not connected |
+|  |  |
+|  |  |
+
+## Notes
+
+- For contacts, send digits only with the country code. Do not add `+`.
+- For groups, the session must be a member/admin of the group.
+- The media key must match the endpoint. For example, `/messages/video` expects a `video` object.
+- Send either `url` or `data` in the media object, not both.
+- Media URLs must be publicly reachable. Private or expired links fail.
+- When sending Base64, `mimetype` must match the actual file type.
+- Replace `SESSION_ID` with your session ID. Get it from [List Sessions](/whatsapp/sessions/list-sessions).

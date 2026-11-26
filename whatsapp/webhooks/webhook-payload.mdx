@@ -1,0 +1,376 @@
+---
+title: "Webhook Payload"
+description: "Webhook payload format, event types, and signature verification for WapiMax webhooks."
+---
+
+## Endpoint
+
+<Badge color="blue">POST</Badge> `https://your-server.com/webhook`
+
+WapiMax sends a POST request to your webhook URL when a subscribed event occurs.
+
+## Envelope
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "message",
+  "timestamp": 1767143203,
+  "data": {}
+}
+```
+
+</CodeGroup>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `session_id` | string | Session that generated the event |
+| `event` | string | Event name |
+| `timestamp` | integer | Unix time in seconds |
+| `data` | object | Event data |
+| `offline` | boolean | `message` only. Replayed from the offline window. |
+
+## Events
+
+| Event | Description |
+| --- | --- |
+| `all` | Subscribe to all events |
+| `message` | New message received or forwarded |
+| `receipt` | Delivered or read receipt |
+| `presence` | Contact online or offline |
+| `chat_presence` | Chat activity, such as typing |
+| `group_update` | Group info or settings changed |
+| `joined_group` | Session joined a group |
+| `qr_code` | QR code generated |
+| `pair_code` | Pairing code generated |
+| `connected` | Session connected |
+| `disconnected` | Session disconnected |
+| `logged_out` | Session logged out |
+| `account_locked` | Account locked by WhatsApp |
+| `picture_update` | Profile picture changed |
+| `user_about_update` | About text changed |
+| `push_name_update` | Display name changed |
+| `contact_update` | Contact updated |
+| `device_list_update` | Linked devices changed |
+| `pin_update` | Chat pinned or unpinned |
+| `mute_update` | Chat muted or unmuted |
+| `archive_update` | Chat archived or unarchived |
+| `mark_chat_as_read` | Chat marked as read |
+| `undecryptable_message` | Message could not be decrypted |
+| `client_outdated` | Client version outdated |
+| `offline_sync_preview` | Offline sync preview available |
+| `offline_sync_completed` | Offline sync completed |
+| `scheduled_sent` | Scheduled message sent |
+| `scheduled_failed` | Scheduled message failed |
+| `blast_progress` | Blast job progress |
+| `blast_completed` | Blast job completed |
+| `call_log_sync` | Call log update received |
+| `stream_error` | WhatsApp stream error |
+| `enc_decrypt_failed` | Message decryption failed |
+
+## Event examples
+
+### `message`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "message",
+  "timestamp": 1767143203,
+  "offline": false,
+  "data": {
+    "from": "254712345678@s.whatsapp.net",
+    "from_phone": "254712345678",
+    "chat": "254712345678@s.whatsapp.net",
+    "chat_phone": "254712345678",
+    "quoted_message_id": null,
+    "quoted_sender_jid": null,
+    "message_id": "3EB0ABC123",
+    "is_from_me": false,
+    "push_name": "Sender",
+    "message_type": "text",
+    "text": "Hello",
+    "caption": null,
+    "media_mimetype": null,
+    "media": null,
+    "location": null,
+    "is_group": false,
+    "participant": "254712345678@s.whatsapp.net"
+  }
+}
+```
+
+</CodeGroup>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `from` | string | Sender JID (phone JID or LID) |
+| `from_phone` | string | Sender phone, may be null |
+| `chat` | string | Chat JID |
+| `chat_phone` | string | Chat phone, may be null |
+| `quoted_message_id` | string | Quoted message ID, may be null |
+| `quoted_sender_jid` | string | Quoted sender JID, may be null |
+| `message_id` | string | WhatsApp message ID |
+| `is_from_me` | boolean | Sent by the connected account |
+| `push_name` | string | Sender display name |
+| `message_type` | string | Message type |
+| `text` | string | Text, may be null |
+| `caption` | string | Media caption, may be null |
+| `media_mimetype` | string | Media MIME type, may be null |
+| `media` | object | Media info, may be null |
+| `location` | object | Location data, may be null |
+| `is_group` | boolean | Group message |
+| `participant` | string | Group participant JID |
+| `selected_id` | string | Interactive replies only |
+| `selected_text` | string | Interactive replies only |
+| `native_flow` | object | `interactive_response` only |
+
+Interactive reply types: `interactive_response`, `buttons_response`, `list_response`, `template_button_reply`.
+
+#### Location
+
+<CodeGroup>
+
+```json location
+{
+  "latitude": -6.98,
+  "longitude": 109.13,
+  "name": "Hotel X",
+  "address": "Example address",
+  "url": "https://maps.google.com/?q=-6.98,109.13",
+  "accuracy_meters": 12,
+  "speed_mps": 0,
+  "is_live": false
+}
+```
+
+</CodeGroup>
+
+Live locations set `is_live` to `true` and can include `sequence_number` and `caption`.
+
+### `connected`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "connected",
+  "timestamp": 1767143203,
+  "data": {}
+}
+```
+
+</CodeGroup>
+
+### `picture_update`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "picture_update",
+  "timestamp": 1767143203,
+  "data": {
+    "jid": "254712345678@s.whatsapp.net",
+    "action": "set"
+  }
+}
+```
+
+</CodeGroup>
+
+### `pin_update`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "pin_update",
+  "timestamp": 1767143203,
+  "data": {
+    "chat_jid": "254712345678@s.whatsapp.net",
+    "pinned": true
+  }
+}
+```
+
+</CodeGroup>
+
+### `account_locked`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "account_locked",
+  "timestamp": 1767143203,
+  "data": {
+    "reason": "AccountLocked",
+    "cooldown_secs": 300,
+    "cooldown_until": 1767143503
+  }
+}
+```
+
+</CodeGroup>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `reason` | string | Lock reason |
+| `cooldown_secs` | integer | Cooldown in seconds |
+| `cooldown_until` | integer | Unix time cooldown ends |
+
+### `call_log_sync`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "call_log_sync",
+  "timestamp": 1767143203,
+  "data": {
+    "call_creator_jid": "254712345678@s.whatsapp.net",
+    "call_id": "ABCD1234",
+    "from_me": false,
+    "timestamp": 1767143100,
+    "from_full_sync": false,
+    "record": "CallLogRecord { ... }"
+  }
+}
+```
+
+</CodeGroup>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `call_creator_jid` | string | Caller JID |
+| `call_id` | string | Call ID |
+| `from_me` | boolean | Placed by this account |
+| `timestamp` | integer | Record time |
+| `from_full_sync` | boolean | Received via full sync |
+| `record` | string | Debug representation |
+
+### `stream_error`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "stream_error",
+  "timestamp": 1767143203,
+  "data": {
+    "code": "429"
+  }
+}
+```
+
+</CodeGroup>
+
+### `enc_decrypt_failed`
+
+<CodeGroup>
+
+```json Payload
+{
+  "session_id": "my-session",
+  "event": "enc_decrypt_failed",
+  "timestamp": 1767143203,
+  "data": {
+    "chat": "254712345678@s.whatsapp.net",
+    "sender": "254712345678@s.whatsapp.net",
+    "message_id": "3EB0ABC123",
+    "enc_index": 0,
+    "enc_type": "skmsg",
+    "reason": "NoSession"
+  }
+}
+```
+
+</CodeGroup>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `chat` | string | Chat JID |
+| `sender` | string | Sender JID |
+| `message_id` | string | Message ID |
+| `enc_index` | integer | Failing encryption layer |
+| `enc_type` | string | Encryption type |
+| `reason` | string | Failure reason |
+
+<Note>
+  Other events use the same envelope. Their `data` fields depend on the event.
+</Note>
+
+## Signature verification
+
+When a secret is set, requests are signed with HMAC-SHA256.
+
+| Header | Value |
+| --- | --- |
+| `X-Webhook-Timestamp` | Unix time |
+| `X-Webhook-Signature` | `sha256=` + hex digest |
+| `X-Webhook-Signature-Version` | `v2` |
+
+Signed content: `{timestamp}.{raw_request_body}`
+
+<CodeGroup>
+
+```javascript Node.js
+const crypto = require("crypto");
+
+function verifyWebhook(secret, rawBody, signature, timestamp) {
+  const expectedSignature = crypto
+    .createHmac("sha256", secret)
+    .update(`${timestamp}.${rawBody}`)
+    .digest("hex");
+
+  const signatureBuf = Buffer.from(signature.replace("sha256=", ""), "hex");
+  const expectedBuf = Buffer.from(expectedSignature, "hex");
+
+  if (signatureBuf.length !== expectedBuf.length) return false;
+
+  return crypto.timingSafeEqual(signatureBuf, expectedBuf);
+}
+```
+
+```python Python
+import hmac
+import hashlib
+
+def verify_webhook(secret, raw_body, signature, timestamp):
+    sig = signature.replace("sha256=", "")
+    expected = hmac.new(
+        secret.encode(),
+        f"{timestamp}.{raw_body}".encode(),
+        hashlib.sha256,
+    ).hexdigest()
+    return hmac.compare_digest(expected, sig)
+```
+
+```php PHP
+function verifyWebhook(string $secret, string $rawBody, string $signature, string $timestamp): bool
+{
+    $sig = str_replace("sha256=", "", $signature);
+    $expected = hash_hmac("sha256", $timestamp . "." . $rawBody, $secret);
+    return hash_equals($expected, $sig);
+}
+```
+
+</CodeGroup>
+
+## Best practices
+
+- Verify using the raw body. Do not re-serialize JSON.
+- Reject stale timestamps.
+- Return 2xx promptly and process in the background.
+- Deliveries may be retried. Deduplicate `message` events by `data.message_id`.

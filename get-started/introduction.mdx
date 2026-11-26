@@ -1,0 +1,70 @@
+---
+title: "Introduction"
+description: "Learn the core ideas behind WapiMax before you build your first automation."
+icon: "book-open"
+---
+
+WapiMax brings your business communication and automation into one place. Instead of stitching together separate tools for every channel, you work with a single account, a single dashboard and a single API.
+
+This page introduces the key concepts you will meet throughout the documentation. Once they are clear, the rest of the guides will feel familiar.
+
+## Core concepts
+
+<AccordionGroup>
+  <Accordion title="Account and dashboard" icon="gauge">
+    Your account is home to everything you build. The [dashboard](https://wapimax.com/dashboard) is where you manage your plan, connected channels, API keys and settings.
+  </Accordion>
+
+  <Accordion title="Subscription" icon="badge-check">
+    A subscription activates the platform. With an active plan, every core feature is available to you, including the full WhatsApp API.
+  </Accordion>
+
+  <Accordion title="Credits" icon="coins">
+    Credits are reserved for add-on services that are billed by usage. Your core automations do not consume them.
+  </Accordion>
+
+  <Accordion title="API keys" icon="key">
+    API keys identify your application when it calls WapiMax. Create and manage them in [Developer → API keys](https://wapimax.com/dashboard/developer/api-keys), and keep them private.
+  </Accordion>
+
+  <Accordion title="Sessions" icon="plug">
+    A session represents a connected WhatsApp number. You create a session, link it with a QR code or pairing code, and then use it to send and receive messages.
+  </Accordion>
+
+  <Accordion title="Webhooks" icon="webhook">
+    Webhooks deliver events to your application as they happen, such as new messages or status changes, so you can respond in real time.
+  </Accordion>
+</AccordionGroup>
+
+## How the API is organized
+
+The API reference is grouped by the area of the platform it controls. For WhatsApp, each group maps to a familiar part of the app.
+
+| Group | What it covers |
+| --- | --- |
+| [Sessions](/whatsapp/sessions/list-sessions) | Connect, restart and log out numbers |
+| [Send](/whatsapp/send/send-text) | Text, media, interactive messages and payments |
+| [Chat](/whatsapp/chat/list-chats) | Archive, pin, mute and manage conversations |
+| [Groups](/whatsapp/groups/list-groups) | Create groups and manage members |
+| [Contacts](/whatsapp/contacts/list-contacts) | Look up, verify and block contacts |
+| [Webhooks](/whatsapp/webhooks/list-webhooks) | Subscribe to real-time events |
+
+## Before you begin
+
+You need three things to follow the guides:
+
+- A WapiMax account
+- An active subscription
+- An API key for your application
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Create an account" icon="user-plus" href="/get-started/create-account">
+    Register and set up your workspace.
+  </Card>
+
+  <Card title="Authorization" icon="shield-check" href="/get-started/authorization">
+    Generate an API key and authenticate your requests.
+  </Card>
+</Columns>

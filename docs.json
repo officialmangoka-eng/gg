@@ -1,0 +1,214 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "WapiMax Docs",
+  "colors": {
+    "primary": "#059669",
+    "light": "#34D399",
+    "dark": "#047857"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "pages": [
+      "index",
+      {
+        "group": "Get Started",
+        "pages": [
+          "get-started/introduction",
+          "get-started/create-account",
+          "get-started/authorization"
+        ]
+      },
+      {
+        "group": "Communication",
+        "pages": [
+          {
+            "group": "WhatsApp",
+            "icon": "whatsapp",
+            "pages": [
+              {
+                "group": "Sessions",
+                "icon": "plug",
+                "pages": [
+                  "whatsapp/sessions/list-sessions",
+                  "whatsapp/sessions/get-session"
+                ]
+              },
+              {
+                "group": "Send",
+                "icon": "paper-plane",
+                "pages": [
+                  "whatsapp/send/send-message",
+                  "whatsapp/send/send-media",
+                  "whatsapp/send/send-sticker",
+                  "whatsapp/send/send-location",
+                  "whatsapp/send/send-poll",
+                  "whatsapp/send/send-list",
+                  "whatsapp/send/send-cta-url",
+                  "whatsapp/send/send-buttons",
+                  "whatsapp/send/send-contact",
+                  "whatsapp/send/send-channel-admin-invite",
+                  "whatsapp/send/send-channel-follower-invite",
+                  "whatsapp/send/send-interactive-flow-buttons"
+                ]
+              },
+              {
+                "group": "Chat",
+                "icon": "comments",
+                "pages": [
+                  "whatsapp/chat/react-to-message",
+                  "whatsapp/chat/reply-to-message",
+                  "whatsapp/chat/edit-message",
+                  "whatsapp/chat/delete-message",
+                  "whatsapp/chat/forward-message",
+                  "whatsapp/chat/pin-message",
+                  "whatsapp/chat/mark-as-read",
+                  "whatsapp/chat/update-active-status",
+                  "whatsapp/chat/typing-recording",
+                  "whatsapp/chat/send-chat-state"
+                ]
+              },
+              {
+                "group": "Groups",
+                "icon": "users",
+                "pages": [
+                  "whatsapp/groups/list-groups",
+                  "whatsapp/groups/create-group",
+                  "whatsapp/groups/join-group",
+                  "whatsapp/groups/get-group-info",
+                  "whatsapp/groups/get-group-link",
+                  "whatsapp/groups/list-members",
+                  "whatsapp/groups/change-group-name",
+                  "whatsapp/groups/set-group-description",
+                  "whatsapp/groups/set-group-settings",
+                  "whatsapp/groups/set-group-picture",
+                  "whatsapp/groups/add-members",
+                  "whatsapp/groups/remove-members",
+                  "whatsapp/groups/add-admin",
+                  "whatsapp/groups/remove-admin",
+                  "whatsapp/groups/leave-group",
+                  "whatsapp/groups/reset-group-link"
+                ]
+              },
+              {
+                "group": "Contacts",
+                "icon": "address-book",
+                "pages": [
+                  "whatsapp/contacts/list-contacts",
+                  "whatsapp/contacts/check-whatsapp-numbers",
+                  "whatsapp/contacts/get-contact-info",
+                  "whatsapp/contacts/get-profile-picture",
+                  "whatsapp/contacts/save-rename-contact",
+                  "whatsapp/contacts/resolve-lid-jid",
+                  "whatsapp/contacts/block-list",
+                  "whatsapp/contacts/block-contact",
+                  "whatsapp/contacts/check-block-status",
+                  "whatsapp/contacts/unblock-contact"
+                ]
+              },
+              {
+                "group": "Profile",
+                "icon": "id-badge",
+                "pages": [
+                  "whatsapp/profile/get-my-profile",
+                  "whatsapp/profile/update-my-profile",
+                  "whatsapp/profile/remove-profile-picture"
+                ]
+              },
+              {
+                "group": "Webhooks",
+                "icon": "webhook",
+                "pages": [
+                  "whatsapp/webhooks/list-webhooks",
+                  "whatsapp/webhooks/register-webhook",
+                  "whatsapp/webhooks/webhook-payload"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "SMS",
+            "icon": "message-sms",
+            "pages": [
+              "sms/overview",
+              "sms/send-single-sms",
+              "sms/send-bulk-sms",
+              "sms/check-account-balance",
+              "sms/get-delivery-report"
+            ]
+          },
+          {
+            "group": "Email",
+            "icon": "envelope",
+            "pages": [
+              {
+                "group": "Transactional",
+                "icon": "envelope-open-text",
+                "pages": [
+                  "email/transactional/send-single-email",
+                  "email/transactional/send-bulk-emails"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://wapimax.com/dashboard/support/help"
+      },
+      {
+        "href": "https://wapimax.com/login/",
+        "label": "Log in"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://wapimax.com/dashboard"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "website": "https://wapimax.com"
+    }
+  },
+  "background": {
+    "color": {
+      "light": "#F8FAFC",
+      "dark": "#020617"
+    }
+  },
+  "fonts": {
+    "family": "Inter"
+  },
+  "api": {
+    "playground": {
+      "display": "none"
+    }
+  },
+  "metadata": {
+    "timestamp": true
+  },
+  "description": "Official WapiMax documentation with clear guides, API references, setup instructions and practical examples to help you integrate, build and get the most out of WapiMax."
+}

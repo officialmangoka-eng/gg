@@ -1,0 +1,46 @@
+---
+title: "Register Webhook"
+description: "Register webhook endpoints from the WapiMax dashboard to receive real-time WhatsApp events."
+---
+
+<Warning>
+  Webhooks are registered from the WapiMax dashboard.
+</Warning>
+
+## Steps
+
+<Steps>
+  <Step title="Sign in">
+    Sign in at [wapimax.com/login](https://wapimax.com/login).
+  </Step>
+  <Step title="Open Webhooks">
+    Go to [Developer > Webhooks](https://wapimax.com/dashboard/developer/webhooks).
+  </Step>
+  <Step title="Add your endpoint">
+    Create a webhook and enter your HTTPS URL.
+  </Step>
+  <Step title="Select events">
+    Choose events, or `all`. See [Events](/whatsapp/webhooks/webhook-payload#events).
+  </Step>
+  <Step title="Save">
+    Save the configuration.
+  </Step>
+</Steps>
+
+## Requirements
+
+- Public HTTPS URL
+- Accepts POST requests
+- Returns a 2xx response
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Webhook Payload" icon="code" href="/whatsapp/webhooks/webhook-payload">
+    Payload format and events.
+  </Card>
+
+  <Card title="List Webhooks" icon="list" href="/whatsapp/webhooks/list-webhooks">
+    Get registered webhooks.
+  </Card>
+</Columns>

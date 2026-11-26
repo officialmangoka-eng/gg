@@ -1,0 +1,69 @@
+---
+title: "Overview"
+icon: "house"
+description: "Send SMS through multiple sender IDs using one WapiMax API key and endpoint. Unlike other platforms that offer only one free sender ID, WapiMax gives you access to multiple sender IDs in one integration."
+---
+
+<CardGroup cols={3}>
+  <Card title="One API key" icon="key">
+    Send through every available sender ID with the same key.
+  </Card>
+  <Card title="Multiple sender IDs" icon="layer-group">
+    Multiple sender IDs available today, with more being added.
+  </Card>
+  <Card title="Built for volume" icon="chart-line">
+    Spread large sends across sender IDs instead of relying on one.
+  </Card>
+</CardGroup>
+
+## Base URL
+
+```text
+https://api.wapimax.com/sms/v1
+```
+
+## How to check current free sender IDs
+
+<Steps>
+  <Step title="Open your dashboard">
+    Sign in to your WapiMax account dashboard.
+  </Step>
+  <Step title="Go to SMS">
+    In the sidebar, under **Communication**, select **SMS**.
+  </Step>
+  <Step title="Open Sender IDs">
+    Select **Sender ID**. All available sender IDs are listed.
+  </Step>
+</Steps>
+
+<Tip>
+  Use the sender ID exactly as listed, e.g. `TextSMS`, in the `sender_id` field.
+</Tip>
+
+## Before you send
+
+- An active WapiMax account
+- A plan that includes SMS
+- An active sender ID
+- SMS wallet balance
+
+<Warning>
+  Most sender IDs support Kenyan numbers only. Confirm your sender ID supports international SMS before sending outside Kenya.
+</Warning>
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Send a single SMS" icon="paper-plane" href="/sms/send-single-sms">
+    Send to one recipient, now or scheduled.
+  </Card>
+  <Card title="Send bulk SMS" icon="users" href="/sms/send-bulk-sms">
+    Send the same SMS to up to 20 recipients.
+  </Card>
+  <Card title="Check account balance" icon="wallet" href="/sms/check-account-balance">
+    Get your SMS wallet balance.
+  </Card>
+  <Card title="Get delivery report" icon="chart-simple" href="/sms/get-delivery-report">
+    Track send and delivery status.
+  </Card>
+</CardGroup>
